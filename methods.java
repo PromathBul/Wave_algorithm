@@ -1,23 +1,8 @@
-import java.util.Scanner;
 import java.util.Random;
 
 public class methods {
     public static final String RED = "\033[0;31m";
     public static final String RESET = "\u001B[0m";
-
-    static int inputNum(String msg, Scanner scanner) {
-        int num;
-        System.out.print(msg);
-        do {
-            System.out.println("Ожидание ввода...");
-            while (!scanner.hasNextInt()) {
-                System.out.println("Введите натуральное число: ");
-                scanner.next();
-            }
-            num = scanner.nextInt();
-        } while (num <= 0);
-        return num;
-    }
 
     static int[][] createField(int rows, int columns) {
         int[][] field = new int[rows + 2][columns + 2];
@@ -29,28 +14,6 @@ public class methods {
             }
         }
         return field;
-    }
-
-    static void show2dArray(int[][] array) {
-        for (int i = 0; i < array[0].length * 8; i++)
-            System.out.print("_");
-        System.out.println();
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                if (j != array[i].length - 1)
-                    System.out.printf("| %d\t", array[i][j]);
-                else
-                    System.out.printf("| %d\t|", array[i][j]);
-            }
-            System.out.println();
-            for (int k = 0; k < array[0].length * 8 + 1; k++) {
-                if (k % 8 == 0)
-                    System.out.print("|");
-                else
-                    System.out.print("_");
-            }
-            System.out.println();
-        }
     }
 
     static void buildingWalls(int[][] array, int walls) {
@@ -91,22 +54,6 @@ public class methods {
             }
         }
         return step;
-    }
-
-    static void showArray(String[] array) {
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i] + " ");
-        }
-        System.out.println();
-    }
-
-    static Boolean numberWalls(int rows, int columns, int walls) {
-        return walls <= rows * columns - 2;
-    }
-
-    static Boolean isRoute(int[][] array, int[] finish) {
-        return array[finish[0] + 1][finish[1]] > 0 || array[finish[0] - 1][finish[1]] > 0
-                || array[finish[0]][finish[1] + 1] > 0 || array[finish[0]][finish[1] - 1] > 0;
     }
 
     static int[][] writingRoute(int[][] array, int[] finish, int step) {

@@ -4,13 +4,41 @@ public class program {
     public static void main(String[] args) {
         Scanner iScanner = new Scanner(System.in);
 
-        int rows = methods.inputNum("Введите количество строк поля. ", iScanner);
-        int columns = methods.inputNum("Введите количество столбцов поля. ", iScanner);
-        int walls = methods.inputNum("Введите количество стен. ", iScanner);
-        while (!methods.numberWalls(rows, columns, walls)) {
+        int rows = request_validation.inputNum("Введите количество строк поля. ", iScanner);
+        int columns = request_validation.inputNum("Введите количество столбцов поля. ", iScanner);
+        int walls = request_validation.inputNum("Введите количество стен. ", iScanner);
+        while (!request_validation.numberWalls(rows, columns, walls)) {
             System.out.println("Количество стен превышает количество ячеек.");
             System.out.printf("Количество стен должно быть в диапазоне от 0 до %d.\n", rows * columns - 2);
-            walls = methods.inputNum("Введите количество стен: ", iScanner);
+            walls = request_validation.inputNum("Введите количество стен: ", iScanner);
+        }
+
+        int startRow = request_validation.inputNum("Введите индекс строки старта. ", iScanner);
+        while (!request_validation.isRigthIndex(startRow, rows)) {
+            System.out.println("Номер строки не может быть больше количества строк.");
+            System.out.printf("Введите число от 1 до %d.\n", rows);
+            startRow = request_validation.inputNum("Введите номер строки: ", iScanner);
+        }
+
+        int startColumn = request_validation.inputNum("Введите индекс столбца старта. ", iScanner);
+        while (!request_validation.isRigthIndex(startColumn, columns)) {
+            System.out.println("Номер столбца не может быть больше количества столбцов.");
+            System.out.printf("Введите число от 1 до %d.\n", columns);
+            startColumn = request_validation.inputNum("Введите номер столбца: ", iScanner);
+        }
+
+        int finishRow = request_validation.inputNum("Введите индекс строки финиша. ", iScanner);
+        while (!request_validation.isRigthIndex(finishRow, rows)) {
+            System.out.println("Номер строки не может быть больше количества строк.");
+            System.out.printf("Введите число от 1 до %d.\n", rows);
+            finishRow = request_validation.inputNum("Введите номер строки: ", iScanner);
+        }
+
+        int finishColumn = request_validation.inputNum("Введите индекс столбца финиша. ", iScanner);
+        while (!request_validation.isRigthIndex(finishColumn, columns)) {
+            System.out.println("Номер столбца не может быть больше количества столбцов.");
+            System.out.printf("Введите число от 1 до %d.\n", rows);
+            finishColumn = request_validation.inputNum("Введите номер столбца: ", iScanner);
         }
 
         iScanner.close();
@@ -18,18 +46,15 @@ public class program {
         int[][] field = methods.createField(rows, columns);
         methods.buildingWalls(field, walls);
 
-        // int[] start = new int[] { field.length - 2, 1 };
-        int[] finish = new int[] { 1, field[0].length - 2 };
+        field[startRow][startColumn] = 1;
+        field[finishRow][finishColumn] = -2;
 
-        field[field.length - 2][1] = 1;
-        field[1][field[0].length - 2] = -2;
+        int[] finish = new int[]{finishRow, finishColumn};
 
         int step = methods.drawRoutes(field);
         System.out.println();
 
-        if (methods.isRoute(field, finish)) {
-            // methods.show2dArray(field);
-
+        if (request_validation.isRoute(field, finish)) {
             int[][] coordinates = methods.writingRoute(field, finish, step);
             methods.ReverseArray(coordinates);
             System.out.println();
@@ -38,7 +63,7 @@ public class program {
             System.out.println();
             methods.elementsColoring(field, coordinates);
         } else {
-            methods.show2dArray(field);
+            common_methods.show2dArray(field);
             System.out.println("Построить маршрут невозможно.");
         }
     }
