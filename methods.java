@@ -1,4 +1,7 @@
 import java.util.Scanner;
+
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 import java.util.Random;
 
 public class methods {
@@ -115,6 +118,14 @@ public class methods {
     }
 
     static Boolean numberWalls(int rows, int columns, int walls){
-        return walls <= rows * columns - 2;
+        return walls <= rows * columns - 2 && walls >= 0;
+    }
+
+    // static Boolean isNaturalNumber(String number, Scanner scanner){
+    //     return scanner.hasNextInt() && 
+    // }
+
+    static Boolean isRoute(int[][] array, int[] finish){
+        return array[finish[0] + 1][finish[1]] > 0 || array[finish[0] - 1][finish[1]] > 0 || array[finish[0]][finish[1] + 1] > 0 || array[finish[0]][finish[1] - 1] > 0;
     }
 }

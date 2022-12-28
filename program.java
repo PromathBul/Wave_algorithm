@@ -7,9 +7,9 @@ public class program {
         int rows = methods.inputNum("Введите количество строк поля: ", iScanner);
         int columns = methods.inputNum("Введите количество столбцов поля: ", iScanner);
         int walls = methods.inputNum("Введите количество стен: ", iScanner);
-        while(!methods.numberWalls(rows, columns, walls)){
+        while (!methods.numberWalls(rows, columns, walls)) {
             System.out.println("Количество стен превышает количество ячеек.");
-            System.out.printf("Количество стен не должно превышать %d.\n", rows * columns - 2);
+            System.out.printf("Количество стен должно быть в диапазоне от 0 до %d.\n", rows * columns - 2);
             walls = methods.inputNum("Введите количество стен: ", iScanner);
         }
         iScanner.close();
@@ -22,18 +22,23 @@ public class program {
 
         field[field.length - 2][1] = 1;
         field[1][field[0].length - 2] = -2;
-        // methods.show2dArray(field);
 
         int step = methods.drawRoutes(field);
         System.out.println();
-        methods.show2dArray(field);
-        
-        String reversedRoute = methods.writeRoute(field, finish, step);
 
-        String[] reversedRouteArray = reversedRoute.split(" ");
-        methods.ReverseArray(reversedRouteArray);
-        System.out.println();
-        methods.showArray(reversedRouteArray);
+        if (methods.isRoute(field, finish)) {
+            methods.show2dArray(field);
+            String reversedRoute = methods.writeRoute(field, finish, step);
+
+            String[] reversedRouteArray = reversedRoute.split(" ");
+            methods.ReverseArray(reversedRouteArray);
+            System.out.println();
+            System.out.println("Пошаговый маршрут c координатами каждой точки: ");
+            methods.showArray(reversedRouteArray);
+        } else {
+            methods.show2dArray(field);
+            System.out.println("Построить маршрут невозможно.");
+        }
     }
 
 }
