@@ -2,11 +2,9 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class methods {
-    static int inputNum(String msg) {
-        Scanner iScanner = new Scanner(System.in);
+    static int inputNum(String msg, Scanner scanner) {
         System.out.print(msg);
-        int num = iScanner.nextInt();
-        iScanner.close();
+        int num = scanner.nextInt();
         return num;
     }
 
@@ -23,7 +21,7 @@ public class methods {
     }
 
     static void show2dArray(int[][] array) {
-        for (int i = 0; i < array.length * 8; i++) {
+        for (int i = 0; i < array[0].length * 8; i++) {
             System.out.print("_");
         }
         System.out.println();
@@ -35,7 +33,7 @@ public class methods {
                     System.out.printf("| %d\t|", array[i][j]);
             }
             System.out.println();
-            for (int k = 0; k < array.length * 8 + 1; k++) {
+            for (int k = 0; k < array[0].length * 8 + 1; k++) {
                 if (k % 8 == 0)
                     System.out.print("|");
                 else
@@ -50,6 +48,11 @@ public class methods {
         for (int i = 0; i < walls; i++) {
             int row = rnd.nextInt(1, array.length - 1);
             int column = rnd.nextInt(1, array[0].length - 1);
+            while (array[row][column] == -1 || (row == array.length - 2 && column == 1)
+                    || (row == 1 && column == array[0].length - 2)) {
+                row = rnd.nextInt(1, array.length - 1);
+                column = rnd.nextInt(1, array[0].length - 1);
+            }
             array[row][column] = -1;
         }
     }
@@ -96,7 +99,7 @@ public class methods {
         return route;
     }
 
-    static void ReverseArray(String[] array){
+    static void ReverseArray(String[] array) {
         for (int i = 0; i < array.length / 2; i++) {
             String helper = array[i];
             array[i] = array[array.length - 1 - i];
@@ -104,7 +107,7 @@ public class methods {
         }
     }
 
-    static void showArray(String[] array){
+    static void showArray(String[] array) {
         for (int i = 0; i < array.length; i++) {
             System.out.print(array[i] + " ");
         }
