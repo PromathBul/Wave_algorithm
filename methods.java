@@ -1,13 +1,18 @@
 import java.util.Scanner;
-
-import javax.swing.text.StyledEditorKit.BoldAction;
-
 import java.util.Random;
 
 public class methods {
     static int inputNum(String msg, Scanner scanner) {
+        int num;
         System.out.print(msg);
-        int num = scanner.nextInt();
+        do {
+            System.out.println("Ожидание ввода...");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Введите натуральное число: ");
+                scanner.next();
+            }
+            num = scanner.nextInt();
+        } while (num <= 0);
         return num;
     }
 
@@ -117,15 +122,12 @@ public class methods {
         System.out.println();
     }
 
-    static Boolean numberWalls(int rows, int columns, int walls){
-        return walls <= rows * columns - 2 && walls >= 0;
+    static Boolean numberWalls(int rows, int columns, int walls) {
+        return walls <= rows * columns - 2;
     }
 
-    // static Boolean isNaturalNumber(String number, Scanner scanner){
-    //     return scanner.hasNextInt() && 
-    // }
-
-    static Boolean isRoute(int[][] array, int[] finish){
-        return array[finish[0] + 1][finish[1]] > 0 || array[finish[0] - 1][finish[1]] > 0 || array[finish[0]][finish[1] + 1] > 0 || array[finish[0]][finish[1] - 1] > 0;
+    static Boolean isRoute(int[][] array, int[] finish) {
+        return array[finish[0] + 1][finish[1]] > 0 || array[finish[0] - 1][finish[1]] > 0
+                || array[finish[0]][finish[1] + 1] > 0 || array[finish[0]][finish[1] - 1] > 0;
     }
 }

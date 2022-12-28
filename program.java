@@ -4,14 +4,15 @@ public class program {
     public static void main(String[] args) {
         Scanner iScanner = new Scanner(System.in);
 
-        int rows = methods.inputNum("Введите количество строк поля: ", iScanner);
-        int columns = methods.inputNum("Введите количество столбцов поля: ", iScanner);
+        int rows = methods.inputNum("Введите количество строк поля. ", iScanner);
+        int columns = methods.inputNum("Введите количество столбцов поля. ", iScanner);
         int walls = methods.inputNum("Введите количество стен: ", iScanner);
         while (!methods.numberWalls(rows, columns, walls)) {
             System.out.println("Количество стен превышает количество ячеек.");
             System.out.printf("Количество стен должно быть в диапазоне от 0 до %d.\n", rows * columns - 2);
             walls = methods.inputNum("Введите количество стен: ", iScanner);
         }
+
         iScanner.close();
 
         int[][] field = methods.createField(rows, columns);
