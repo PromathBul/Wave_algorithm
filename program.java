@@ -6,7 +6,7 @@ public class program {
 
         int rows = methods.inputNum("Введите количество строк поля. ", iScanner);
         int columns = methods.inputNum("Введите количество столбцов поля. ", iScanner);
-        int walls = methods.inputNum("Введите количество стен: ", iScanner);
+        int walls = methods.inputNum("Введите количество стен. ", iScanner);
         while (!methods.numberWalls(rows, columns, walls)) {
             System.out.println("Количество стен превышает количество ячеек.");
             System.out.printf("Количество стен должно быть в диапазоне от 0 до %d.\n", rows * columns - 2);
@@ -28,14 +28,15 @@ public class program {
         System.out.println();
 
         if (methods.isRoute(field, finish)) {
-            methods.show2dArray(field);
-            String reversedRoute = methods.writeRoute(field, finish, step);
+            // methods.show2dArray(field);
 
-            String[] reversedRouteArray = reversedRoute.split(" ");
-            methods.ReverseArray(reversedRouteArray);
+            int[][] coordinates = methods.writingRoute(field, finish, step);
+            methods.ReverseArray(coordinates);
             System.out.println();
             System.out.println("Пошаговый маршрут c координатами каждой точки: ");
-            methods.showArray(reversedRouteArray);
+            methods.show2dArrayWith2Col(coordinates);
+            System.out.println();
+            methods.elementsColoring(field, coordinates);
         } else {
             methods.show2dArray(field);
             System.out.println("Построить маршрут невозможно.");

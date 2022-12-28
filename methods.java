@@ -2,6 +2,9 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class methods {
+    public static final String RED = "\033[0;31m";
+    public static final String RESET = "\u001B[0m";
+
     static int inputNum(String msg, Scanner scanner) {
         int num;
         System.out.print(msg);
@@ -29,9 +32,8 @@ public class methods {
     }
 
     static void show2dArray(int[][] array) {
-        for (int i = 0; i < array[0].length * 8; i++) {
+        for (int i = 0; i < array[0].length * 8; i++)
             System.out.print("_");
-        }
         System.out.println();
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
@@ -91,30 +93,6 @@ public class methods {
         return step;
     }
 
-    static String writeRoute(int[][] array, int[] finish, int step) {
-        String route = String.format("(%d;%d) ", finish[0], finish[1]);
-        for (int i = 0, value = step; i < step; i++, value--) {
-            if (array[finish[0]][finish[1] - 1] == value)
-                finish[1]--;
-            else if (array[finish[0]][finish[1] + 1] == value)
-                finish[1]++;
-            else if (array[finish[0] + 1][finish[1]] == value)
-                finish[0]++;
-            else
-                finish[0]--;
-            route += String.format("(%d;%d) ", finish[0], finish[1]);
-        }
-        return route;
-    }
-
-    static void ReverseArray(String[] array) {
-        for (int i = 0; i < array.length / 2; i++) {
-            String helper = array[i];
-            array[i] = array[array.length - 1 - i];
-            array[array.length - 1 - i] = helper;
-        }
-    }
-
     static void showArray(String[] array) {
         for (int i = 0; i < array.length; i++) {
             System.out.print(array[i] + " ");
@@ -130,4 +108,73 @@ public class methods {
         return array[finish[0] + 1][finish[1]] > 0 || array[finish[0] - 1][finish[1]] > 0
                 || array[finish[0]][finish[1] + 1] > 0 || array[finish[0]][finish[1] - 1] > 0;
     }
+
+    static int[][] writingRoute(int[][] array, int[] finish, int step) {
+        int[][] route = new int[step][2];
+        for (int i = 0, value = step; i < step; i++, value--) {
+            if (array[finish[0]][finish[1] - 1] == value)
+                finish[1]--;
+            else if (array[finish[0]][finish[1] + 1] == value)
+                finish[1]++;
+            else if (array[finish[0] + 1][finish[1]] == value)
+                finish[0]++;
+            else
+                finish[0]--;
+            route[i][0] = finish[0];
+            route[i][1] = finish[1];
+        }
+        return route;
+    }
+
+    static void ReverseArray(int[][] array) {
+        for (int i = 0; i < array.length / 2; i++) {
+            int helperFirst = array[i][0];
+            int helperSecond = array[i][1];
+            array[i][0] = array[array.length - 1 - i][0];
+            array[i][1] = array[array.length - 1 - i][1];
+            array[array.length - 1 - i][0] = helperFirst;
+            array[array.length - 1 - i][1] = helperSecond;
+
+        }
+    }
+
+    static void show2dArrayWith2Col(int[][] array) {
+        for (int i = 0; i < array.length; i++)
+            System.out.printf("(%d, %d) ", array[i][0], array[i][1]);
+
+    }
+
+    static void elementsColoring(int[][] array, int[][] coordinates) {
+        for (int i = 0; i < array[0].length * 8; i++) {
+            System.out.print("_");
+        }
+        System.out.println();
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (j != array[i].length - 1) {
+                    Boolean check = false;
+                    for (int k = 0; k < coordinates.length; k++) {
+                        if (i == coordinates[k][0] && j == coordinates[k][1]) {
+                            System.out.printf("%s| %d%s\t", RED, array[i][j], RESET);
+                            check = true;
+                        }
+                    }
+                    if (check == false)
+                        System.out.printf("| %d\t", array[i][j]);
+                    else
+                        check = false;
+                } else
+                    System.out.printf("| %d\t|", array[i][j]);
+            }
+            System.out.println();
+            for (int k = 0; k < array[0].length * 8 + 1; k++) {
+                if (k % 8 == 0)
+                    System.out.print("|");
+                else
+                    System.out.print("_");
+            }
+            System.out.println();
+        }
+    }
+
 }
