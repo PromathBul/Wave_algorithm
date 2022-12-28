@@ -114,4 +114,7 @@ public class methods {
         System.out.println();
     }
 
+    static Boolean numberWalls(int rows, int columns, int walls){
+        return walls <= rows * columns - 2;
+    }
 }

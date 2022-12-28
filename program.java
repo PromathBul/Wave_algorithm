@@ -7,7 +7,11 @@ public class program {
         int rows = methods.inputNum("Введите количество строк поля: ", iScanner);
         int columns = methods.inputNum("Введите количество столбцов поля: ", iScanner);
         int walls = methods.inputNum("Введите количество стен: ", iScanner);
-
+        while(!methods.numberWalls(rows, columns, walls)){
+            System.out.println("Количество стен превышает количество ячеек.");
+            System.out.printf("Количество стен не должно превышать %d.\n", rows * columns - 2);
+            walls = methods.inputNum("Введите количество стен: ", iScanner);
+        }
         iScanner.close();
 
         int[][] field = methods.createField(rows, columns);
